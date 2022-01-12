@@ -1,1 +1,1 @@
-# -IT-SOL-Java-Core-Library-Book-Managment
+# IT-SOL-Java-Core-Library-Book-Managment
