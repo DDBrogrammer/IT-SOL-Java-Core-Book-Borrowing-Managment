@@ -1,3 +1,5 @@
+package entities;
+
 import java.util.Date;
 
 public class Book {
@@ -6,6 +8,8 @@ public class Book {
     private String author;
     private int publishingYear;
     private String field ;
+    private int quantity;
+
 
     public Book(int id, String name, String author, int publishingYear, String field) {
         this.id = id;
@@ -17,17 +21,6 @@ public class Book {
 
     public Book() {
 
-    }
-
-    @Override
-    public String toString() {
-        return "Book{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", author='" + author + '\'' +
-                ", publishingYear=" + publishingYear +
-                ", field='" + field + '\'' +
-                '}';
     }
 
     public int getId() {
@@ -68,5 +61,34 @@ public class Book {
 
     public void setField(String field) {
         this.field = field;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", author='" + author + '\'' +
+                ", publishingYear=" + publishingYear +
+                ", field='" + field + '\'' +
+                ", quantity=" + quantity +
+                '}';
+    }
+
+    public Book(int id, String name, String author, int publishingYear, String field, int quantity) {
+        this.id = id;
+        this.name = name;
+        this.author = author;
+        this.publishingYear = publishingYear;
+        this.field = field;
+        this.quantity = quantity;
     }
 }
