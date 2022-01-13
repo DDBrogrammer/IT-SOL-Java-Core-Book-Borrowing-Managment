@@ -242,7 +242,7 @@ public class Main {
     }
     public static void mergeNewBorrowBook(BorrowBook borrowBook){
         boolean check=true;
-        for(int i=0;i<borrowBookList.length-1;i++){
+        for(int i=0;i<=borrowBookList.length-1;i++){
             if(borrowBookList[i].getReader().getId()==0 && check==true){
                 borrowBookList[i].setQuantity(borrowBook.getQuantity());
                 borrowBookList[i].setBookList(borrowBook.getBookList());
