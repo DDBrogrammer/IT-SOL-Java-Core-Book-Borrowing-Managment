@@ -4,11 +4,12 @@ import java.util.Scanner;
 
 public class Helper {
     public  void printMenu() {
-        System.out.println("Choses action:\n"
-                + "[1] Airport management.\n"
-                + "[2] Fixed wing airplane management.\n"
-                + "[3] Helicopter management group.\n"
-                + "[4] Close program." );
+        System.out.println("Nhập lựa chọn:\n"
+                + "[1] Quản lý sách.\n"
+                + "[2] Quản lý người đọc.\n"
+                + "[3] Quản lý mượn sách.\n"
+                + "[4] Tìm kiếm danh sách mượn theo tên.\n"
+                + "[5] Thoát chương  trình." );
 
     }
 
@@ -22,7 +23,7 @@ public class Helper {
             run=false;
 
         }catch(Exception e ) {
-            System.out.println("You must enter a number :v");
+            System.out.println("Bạn phải nhập một số nguyên");
         }
 
         }
@@ -30,7 +31,7 @@ public class Helper {
         return (int)a;
     }
 
-    public  String getStringInfor(String ask) {
+    public  String getString(String ask) {
         boolean run=true;
         String s="";
         while(run==true) {try {
@@ -40,14 +41,14 @@ public class Helper {
             run=false;
         }
         catch(Exception e ) {
-            System.out.println("You must enter some text :D");
+            System.out.println("Bạn phải nhập một đoạn văn bản");
         }
 
         }
         return s;
     }
 
-    public  Double getDoubleInfor(String ask) {
+    public  Double getDouble(String ask) {
         boolean run=true;
         Double d=0.0;
         while(run==true) {try {
@@ -57,7 +58,7 @@ public class Helper {
             run=false;
         }
         catch(Exception e ) {
-            System.out.println("You must enter anumber :D");
+            System.out.println("Bạn phải nhập một chữ số thập phân");
         }
 
         }
@@ -70,17 +71,17 @@ public class Helper {
         String ans="";
         while(runAgain==true) {
             try {
-                ans = getStringInfor("Do you want to continue with another function \n" +
-                        "[Y]  yes\n" +
-                        "[N]  no\n" +
-                        "Choose an option: "); }catch (Exception e) {
+                ans = getString("Bạn có muốn dùng tiếp chức năng khác không \n" +
+                        "[C]  có\n" +
+                        "[K]  không\n" +
+                        "Chọn một trong 2 lựa chọn: "); }catch (Exception e) {
                 // TODO: handle exceptions
-                ans = getStringInfor("You must enter Y(yes) or N(no).");
+                ans = getString("Bạn phải nhập [C] hoặc [K].");
             }
-            if(ans.toUpperCase().equals("Y")) {
+            if(ans.toUpperCase().equals("C")) {
                 ok=true;
                 runAgain=false;
-            }else if(ans.toUpperCase().equals("N")) {
+            }else if(ans.toUpperCase().equals("K")) {
                 ok=false;
                 runAgain=false;
             }else {

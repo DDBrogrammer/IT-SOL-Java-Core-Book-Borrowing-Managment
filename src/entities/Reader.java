@@ -1,5 +1,7 @@
 package entities;
 
+import java.util.Locale;
+
 public class Reader extends Person {
     private int id;
     private String type;
@@ -12,6 +14,9 @@ public class Reader extends Person {
         this.id = id;
         this.type = type;
     }
+
+
+
     public int getId() {
         return id;
     }
@@ -24,6 +29,14 @@ public class Reader extends Person {
     }
 
     public void setType(String type) {
-        this.type = type;
+        this.type = type.toUpperCase(Locale.ROOT);
+    }
+
+    @Override
+    public String toString() {
+        return "Reader{" +
+                "id=" + id +
+                ", type='" + type + '\'' +
+                "} " + super.toString();
     }
 }

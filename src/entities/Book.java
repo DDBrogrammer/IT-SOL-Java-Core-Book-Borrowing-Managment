@@ -1,6 +1,7 @@
 package entities;
 
 import java.util.Date;
+import java.util.Locale;
 
 public class Book {
     private int id;
@@ -11,13 +12,7 @@ public class Book {
     private int quantity;
 
 
-    public Book(int id, String name, String author, int publishingYear, String field) {
-        this.id = id;
-        this.name = name;
-        this.author = author;
-        this.publishingYear = publishingYear;
-        this.field = field;
-    }
+
 
     public Book() {
 
@@ -60,7 +55,7 @@ public class Book {
     }
 
     public void setField(String field) {
-        this.field = field;
+        this.field = field.toUpperCase(Locale.ROOT);
     }
 
     public int getQuantity() {
