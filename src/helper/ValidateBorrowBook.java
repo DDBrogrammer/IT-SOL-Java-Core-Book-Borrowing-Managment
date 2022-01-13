@@ -50,6 +50,11 @@ public class ValidateBorrowBook {
                   return checkBorrowThanRule && checkNotEnoughBook;
     }
 
-
+    public boolean simpleValidateNumberOfBook(int number){
+        if(number>5){
+            System.out.println("Không được mượn quá số lượng");
+            return false;
+        }else return true;
+    }
 
 }

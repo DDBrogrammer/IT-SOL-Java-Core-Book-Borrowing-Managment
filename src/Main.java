@@ -5,6 +5,7 @@ import helper.ValidateBook;
 import helper.ValidateBorrowBook;
 import service.BookService;
 import helper.Helper;
+import service.BorrowBookService;
 import service.ReaderService;
 
 public class Main {
@@ -14,6 +15,7 @@ public class Main {
     static Helper helper=new Helper();
     static BookService bookService =new BookService();
     static ReaderService readerService =new ReaderService();
+    static BorrowBookService borrowBookService=new BorrowBookService();
     static ValidateBook validateBook=new ValidateBook();
     static ValidateBorrowBook validateBorrowBook=new ValidateBorrowBook();
     public static void main(String[] args) {
@@ -80,7 +82,7 @@ public class Main {
                     if(checkContinue_2){
                         break;
                     } else{run=false;}
-                    break;
+
                 case 3:
                     int chose_3;
                     do {
@@ -95,7 +97,6 @@ public class Main {
                         System.out.println("Bạn phải nhập số nguyên từ 1 đến 3");
                     } while(true);
                     if (chose_3==1){
-
                         int numberOfBookID;
                         int numberOfBook;
                         readerService.printReaderList(readerList);
@@ -104,24 +105,30 @@ public class Main {
                         System.out.println("Đã chọn người dùng: "+reader.toString());
                         do{
                          numberOfBookID= helper.getInt("Chọn số lượng đầu sách:");
-                        if((validateBorrowBook.countNumberOfDifferentBorrowedBook(borrowBookList,reader.getId())+numberOfBookID)>5){
+                        if(!validateBorrowBook.simpleValidateNumberOfBook(numberOfBookID)){
                             System.out.println("Vượt quá số lượng cho mượn");
-                            break;
-                        }} while(true);
+                        }else break;
+                        } while(true);
                         Book[] arrBook= new Book[numberOfBookID];
+                        for(int i=0;i<=arrBook.length-1;i++){
+                            arrBook[i]= new Book(0,"","",0,"",0);
+                        }
                         int[] quantity=new int[numberOfBookID];
+                        for(int i=0;i<=arrBook.length-1;i++){
+                            quantity[i]= 0;
+                        }
                         bookService.printBookList(bookList);
-                        for(int i=0;i<arrBook.length-1;i++){
+                        for(int i=0;i<arrBook.length;i++){
                             System.out.println("Chọn từ danh sách đầu sách đã có");
                             Book book =bookService.getBookById(bookList);
                             System.out.println("Đã chọn sách: "+book.toString());
                             do{
                                  numberOfBook= helper.getInt("Nhập số lượng sách cần mượn:");
-                                if((validateBorrowBook.countNumberOfDifferentBorrowedBook(borrowBookList,reader.getId())+numberOfBookID)>5){
+                                if(!validateBorrowBook.simpleValidateNumberOfBook(numberOfBook)){
                                     System.out.println("Vượt quá số lượng cho mượn");
-                                }else if(validateBorrowBook.validateBorrowBook(borrowBookList,reader.getId(),book.getId(),numberOfBook,bookList)){
-                                    break;
-                                }
+                                }else if(!validateBorrowBook.validateBorrowBook(borrowBookList,reader.getId(),book.getId(),numberOfBook,bookList)){
+                                    System.out.println("");
+                                }else  break;
                             }while(true);
                             arrBook[i].setId(book.getId());
                             arrBook[i].setName(book.getName());
@@ -132,14 +139,47 @@ public class Main {
                             quantity[i]=numberOfBook;
                         }
                         BorrowBook borrowBook=new BorrowBook(arrBook,reader,quantity);
+                        mergeNewBorrowBook(borrowBook);
                         System.out.println(borrowBook.toString());
+                    }else if(chose_3==2){
+                        borrowBookService.printBorrowBookList(borrowBookList);
+
+                    } else if(chose_3==3){
+                        break;
                     }
-                    break;
+                    boolean checkContinue_3= helper.askYesNo();
+                    if(checkContinue_3){
+                        break;
+                    } else{run=false;}
                 case 4:
-                    // code block
-                    break;
+                    int chose_4;
+                    do {
+                        chose_4 = helper.getInt("Nhập lựa chọn:\n"
+                                + "[1] Sắp xếp danh sách theo tên.\n"
+                                + "[2] Sắp xếp danh sách theo số lượng sách.\n"
+                                + "[3] Quay lại.\n"
+                        );
+                        if(chose_4>=1 && chose_4<=3){
+                            break;
+                        }
+                        System.out.println("Bạn phải nhập số nguyên từ 1 đến 3");
+                    } while(true);
+                    if(chose_4==1){
+                        borrowBookService.printBorrowBookListSortByName(borrowBookList);
+                    }else if(chose_4==2){
+                     borrowBookService.printBorrowBookListSortByNumberOfBook(borrowBookList);
+                    } else if(chose_4==3){
+                        break;
+                    }
+                    boolean checkContinue_4= helper.askYesNo();
+                    if(checkContinue_4){
+                        break;
+                    } else{run=false;}
+
                 case 5:
                     run=false;
+                    break;
+
                 default:
                     System.out.println("Bạn phải nhập số nguyên trong khoảng từ 1 đến 5");
             }
@@ -200,6 +240,16 @@ public class Main {
             id++;
         }
     }
+    public static void mergeNewBorrowBook(BorrowBook borrowBook){
+        boolean check=true;
+        for(int i=0;i<borrowBookList.length-1;i++){
+            if(borrowBookList[i].getReader().getId()==0 && check==true){
+                borrowBookList[i].setQuantity(borrowBook.getQuantity());
+                borrowBookList[i].setBookList(borrowBook.getBookList());
+                borrowBookList[i].setReader(borrowBook.getReader());
+                check=false;
+            }
+        }    }
     public static void mergeNewReaderListAndSetId ( Reader[] newReaderList ){
         int id=10000;
         int t=0;
