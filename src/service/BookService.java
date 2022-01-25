@@ -5,6 +5,8 @@ import entities.Reader;
 import helper.Helper;
 import helper.ValidateBook;
 
+import java.util.Locale;
+
 public class BookService {
     private Helper helper=new Helper();
     private ValidateBook validateBook=new ValidateBook();
@@ -39,7 +41,7 @@ public class BookService {
        }
        while(true);
 
-        do{ field = helper.getString("Nhập chuyên ngành: ");
+        do{ field = helper.getString("Nhập chuyên ngành (CNTT,KHTN,VHNT,DTVT): ");
             if(validateBook.validateField(field)){
                 break;
             }
@@ -73,7 +75,6 @@ public class BookService {
         }
         return u;
     }
-
     public Book getBookById(Book[] bookList ){
         Book book=new Book(0,"","",0,"",0);
         int readerId;
@@ -87,7 +88,7 @@ public class BookService {
             if(bookList[i].getId()== readerId){
                book.setId(bookList[i].getId());
                book.setAuthor(bookList[i].getAuthor());
-               book.setField(bookList[i].getField());
+               book.setField(bookList[i].getField().toUpperCase(Locale.ROOT));
                book.setName(bookList[i].getName());
                book.setPublishingYear(bookList[i].getPublishingYear());
                book.setQuantity(bookList[i].getQuantity());
